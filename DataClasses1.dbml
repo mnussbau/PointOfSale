@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="OOPSTORE" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=LAPTOP-458P3E10\SQLEXPRESS;Initial Catalog=OOPSTORE;Integrated Security=True" SettingsObjectName="OOPFinalProject.Properties.Settings" SettingsPropertyName="OOPSTOREConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CUSTOMER" Member="CUSTOMERs">
+    <Type Name="CUSTOMER">
+      <Column Name="cust_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cust_username" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_pass" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_fname" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_lname" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_street" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_city" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_state" Type="System.String" DbType="VarChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_zip" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_phone" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="cust_balance" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Association Name="CUSTOMER_PURCHASE" Member="PURCHASEs" ThisKey="cust_id" OtherKey="cust_id" Type="PURCHASE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ITEM" Member="ITEMs">
+    <Type Name="ITEM">
+      <Column Name="upc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="item_desc" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="item_qty" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="item_price" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Association Name="ITEM_item_purchase" Member="item_purchases" ThisKey="upc" OtherKey="upc" Type="item_purchase" />
+    </Type>
+  </Table>
+  <Table Name="dbo.item_purchase" Member="item_purchases">
+    <Type Name="item_purchase">
+      <Column Name="upc" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="purchase_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="ITEM_item_purchase" Member="ITEM" ThisKey="upc" OtherKey="upc" Type="ITEM" IsForeignKey="true" />
+      <Association Name="PURCHASE_item_purchase" Member="PURCHASE" ThisKey="purchase_id" OtherKey="purchase_id" Type="PURCHASE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PURCHASE" Member="PURCHASEs">
+    <Type Name="PURCHASE">
+      <Column Name="purchase_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cust_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="total_price" Type="System.Decimal" DbType="Decimal(6,2)" CanBeNull="true" />
+      <Column Name="purchase_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="PURCHASE_item_purchase" Member="item_purchases" ThisKey="purchase_id" OtherKey="purchase_id" Type="item_purchase" />
+      <Association Name="CUSTOMER_PURCHASE" Member="CUSTOMER" ThisKey="cust_id" OtherKey="cust_id" Type="CUSTOMER" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
